@@ -50,3 +50,35 @@ The following parameters are needed if you want to use the autoCheck mode.
 
 ### AutoCheck mode
 `.\windows_events_checker.ps1 -useAutoCheck -subscriptionId <subscriptionId> -workspaceId <workspaceId> -resourceGroupName <resourceGroupName> -workspaceName <workspaceName> [-timespan <int in days>]`
+
+### Outputs
+Below you will find three screenshots about the outputs you should receive from the script.
+
+**Event IDs found per rule, and whether they where ingested**
+![Event IDs Found](examples/event-ids-found.png)
+
+**All found Event IDs**<br>
+![All Event IDs Found](examples/all-used-ids.png)
+
+**XPath query to ingest needed events**
+![Event IDs Found](examples/xpath.png)
+
+## Known Issues
+
+### Detecting events configuered as numbers in lists
+This script detectes Windows Security Events with a regex expression. The expression currently used is:
+
+>       $match = Select-String 'EventID==(\d{3,4})|EventID == (\d{3,4})|EventID=="(\d{3,4})"|EventID == "(\d{3,4})"|EventID==''(\d{3,4})''|EventID == ''(\d{3,4})''|"((?:\d{3,4})+)",?|''((?:\d{3,4})+)'',?|\((\d{3,4}),?|[,\s]((?:\d{3,4})+)[,\s]|((?:\d{3,4})+)(?=\))' -InputObject $query -AllMatches
+
+This means that the following patterns are being detected:
+- EventID==[id]
+- EventID == [id]
+- EventID=="[id]"
+- EventID == "[id]"
+- EventID=='[id]'
+- EventID == '[id]'
+- EventID in ("[id]","[id]","[id]",...) --> Can also contain spaced in between
+- EventID in ('[id]','[id]','[id]',...) --> Can also contain spaced in between
+- EventID in ([id], [id], [id],...)
+
+However, since it was hard to detect EventIDs configured as numbers in the middle of a list (like in the last situation), it can happen that the regex detects some numbers being 3 or 4 characters long that are not used as EventIDs in the query. Therefore, I advise to always check if the detected IDs are real Windows Security Event IDs.
