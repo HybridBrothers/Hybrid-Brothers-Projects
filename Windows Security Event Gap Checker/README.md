@@ -82,5 +82,3 @@ This means that the following patterns are being detected:
 - EventID in ([id], [id], [id],...)
 
 However, since it was hard to detect EventIDs configured as numbers in the middle of a list (like in the last situation), it can happen that the regex detects some numbers being 3 or 4 characters long that are not used as EventIDs in the query. Therefore, I advise to always check if the detected IDs are real Windows Security Event IDs.
-=======
-`.\windows_events_checker.ps1 -useAutoCheck -subscriptionId <subscriptionId> -workspaceId <workspaceId> -resourceGroupName <resourceGroupName> -workspaceName <workspaceName> [-timespan <int in days>]`
