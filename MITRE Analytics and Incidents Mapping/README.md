@@ -46,6 +46,10 @@ When running in interactive mode, no additional parameters needs to be set. The 
 
 ![Data connector filter](examples/data-connector-filter.png)
 
+**Example:**
+
+`.\map-analytics.ps1 -resourceGroupName "<resource-group-name>" -workspaceName "<workspace-name>" -interactive`
+
 ### Non-interactive mode
 When running in non-interactive mode, there are a couple of extra parameters that needs to be set. It is important to note that the **non-interactive mode uses an App Registration and the client credentials authentication flow to authenticate to the Microsoft Sentinel workspace**. This means that you will need to have an App Registration with a valid client secret, and an Enterprise Application with the Microsoft Sentinel Reader RBAC role on the relevant Sentinel workspace. The parameters for non-interactive mode are the following:
 
@@ -114,6 +118,10 @@ When running in interactive mode, no additional parameters needs to be set. The 
 4. Lastly, you can choose the maximum age of the incidents you want to return.
 
 ![Period filter](examples/period-filter.png)
+
+**Example:**
+
+`.\map-incidents.ps1 -resourceGroupName "<resource-group-name>" -workspaceName "<workspace-name>" -interactive`
 
 ### Non-interactive mode
 When running in non-interactive mode, there are a couple of extra parameters that needs to be set. It is important to note that the **non-interactive mode uses an App Registration and the client credentials authentication flow to authenticate to the Microsoft Sentinel workspace**. This means that you will need to have an App Registration with a valid client secret, and an Enterprise Application with the Microsoft Sentinel Reader RBAC role on the relevant Sentinel workspace. The parameters for non-interactive mode are the following:
