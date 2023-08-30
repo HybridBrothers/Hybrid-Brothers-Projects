@@ -1,4 +1,4 @@
-![MITRE Analytic / Incidents Mapping](examples/ascii-art.png)
+![MITRE Analytic / Incidents Mapping](examples/banner.png)
 
 # Introduction
 This folder contains two scripts that can be used for mapping Microsoft Sentinel incidents and analytic rules to the MITRE ATT&CK framework. Both scripts (named map-analytics and map-incidents) are written in Powershell, and can be run in an interactive or non-interactive mode. The scripts allow you to filter for certain statuses  or data connectors, so you have more control over which analytic rules and incidents you want to map.
