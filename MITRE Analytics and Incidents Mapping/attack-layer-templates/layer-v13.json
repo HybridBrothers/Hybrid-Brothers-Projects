@@ -1,0 +1,53 @@
+{
+    "name": "",
+    "versions": {
+        "attack": "13",
+        "navigator": "4.8.1",
+        "layer": "4.4"
+    },
+    "domain": "enterprise-attack",
+    "description": "",
+    "filters": {
+        "platforms": [
+            "Linux",
+            "macOS",
+            "Windows",
+            "Network",
+            "PRE",
+            "Containers",
+            "Office 365",
+            "SaaS",
+            "Google Workspace",
+            "IaaS",
+            "Azure AD"
+        ]
+    },
+    "sorting": 0,
+    "layout": {
+        "layout": "side",
+        "aggregateFunction": "average",
+        "showID": false,
+        "showName": true,
+        "showAggregateScores": false,
+        "countUnscored": false
+    },
+    "hideDisabled": false,
+    "techniques": [
+    ],
+    "gradient": {
+        "colors": [
+            "#8ec843ff",
+            "#ffe766ff",
+            "#ff6666ff"
+        ],
+        "minValue": 0,
+        "maxValue": ""
+    },
+    "legendItems": [],
+    "metadata": [],
+    "links": [],
+    "showTacticRowBackground": false,
+    "tacticRowBackground": "#dddddd",
+    "selectTechniquesAcrossTactics": true,
+    "selectSubtechniquesWithParent": false
+}
