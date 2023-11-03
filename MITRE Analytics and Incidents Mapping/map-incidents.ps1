@@ -57,6 +57,9 @@ param (
     [string] $resourceGroupName,
     [Parameter (Mandatory=$true)]
     [string] $workspaceName,
+	[Parameter (Mandatory=$true)]
+	[ValidateSet ("13","14","latest")]
+    [string] $attackVersion,
 
 	[Parameter (ParameterSetName='noninteractive',Mandatory=$false)]
 	[switch] $noninteractive,
@@ -285,10 +288,10 @@ function startConversions() {
 	# MITRE template
 	###############################
 	# Get MITRE ATT&CK Layer and set name and max value
-	$layer = Get-Content .\attack-layer-templates\layer-v13.json | ConvertFrom-Json
+	$layer = Get-Content ".\attack-layer-templates\layer-v$($attackVersion).json" | ConvertFrom-Json
 	$layer.name = "$filename-$filtername"
 	$layer.gradient.maxValue = "$($maxNumber.count)"
-	$LookUpMatrixMitreAttack =  Get-Content .\lookuptable\matrix.json -Raw | ConvertFrom-Json
+	$LookUpMatrixMitreAttack =  Get-Content ".\lookuptable\matrix-v$($attackVersion).json" -Raw | ConvertFrom-Json
 	# Loop to get each technique from the incidents
 	foreach($incidentTechnique in $countAllTechniques) {
 		#Loop through each technique in the matrix lookup table
@@ -458,7 +461,15 @@ function noninteractiveMode() {
 ###############################
 # Main
 ###############################
+# Install required modules
 installModules
+# Check version
+if ($attackVersion -eq "latest") {
+	[System.Collections.ArrayList]$validValues = (Get-Variable "attackVersion").Attributes.ValidValues
+	$validValues.Remove("latest")
+	$attackVersion = $(($validValues | Measure-Object -Maximum).Maximum)
+}
+# Start tool in certain mode
 if ($interactive) {
 	interactiveMode
 } else {
