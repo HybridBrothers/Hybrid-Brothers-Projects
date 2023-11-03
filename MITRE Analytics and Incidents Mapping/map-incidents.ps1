@@ -15,6 +15,8 @@
     The name of the resource group where the Sentinel workspace resides.
     .PARAMETER workspaceName [String]
     The name of the Sentinel Log Analytics workspace.
+	.PARAMETER attackVersion [String] <not mandatory>
+	The version of the ATT&CK franework you want to use.
     .PARAMETER interactive or `noninteractive` [Switch] <not mandatory>
     The flags used to run in interactive or noninteractive mode
 
@@ -57,9 +59,9 @@ param (
     [string] $resourceGroupName,
     [Parameter (Mandatory=$true)]
     [string] $workspaceName,
-	[Parameter (Mandatory=$true)]
+	[Parameter (Mandatory=$false)]
 	[ValidateSet ("13","14","latest")]
-    [string] $attackVersion,
+    [string] $attackVersion = "latest",
 
 	[Parameter (ParameterSetName='noninteractive',Mandatory=$false)]
 	[switch] $noninteractive,

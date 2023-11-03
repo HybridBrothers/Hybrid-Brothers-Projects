@@ -12,7 +12,7 @@ In my opinion, there are a couple of problems with the MITRE ATT&CK blade in Mic
 - No ability to map incidents to the matrix view
 - No ability to filter on analytic rules based on data source, and create a simulated map of the templates with data source filtering
 
-With these two scripts, we are able to tackle the problems of the Sentinel MITRE ATT&CK blade described above. The current version of the MITRE ATT&CK framework we map to, is version v13.
+With these two scripts, we are able to tackle the problems of the Sentinel MITRE ATT&CK blade described above. The current supported versions of the MITRE ATT&CK framework are v13 and v14, where the scripts will default to the latest version if the version parameter is not set.
 
 # How to use the scripts
 
@@ -26,6 +26,7 @@ Regardless of which mode you use, there are always two parameters and one flag t
 | --- | --- | --- |
 | `resourceGroupName` | true | The name of the resource group where the Sentinel workspace resides. |
 | `workspaceName` | true | The name of the Sentinel Log Analytics workspace. |
+| `attackVersion` | false | The version of the ATT&CK franework you want to use. |
 
 | Flag | isRequired? | Description |
 | --- | --- | --- |
@@ -66,7 +67,7 @@ When running in non-interactive mode, there are a couple of extra parameters tha
 
 - Mapping all active analytic rules: `.\map-analytics.ps1 -resourceGroupName "<resource-group-name>" -workspaceName "<workspace-name>" -noninteractive -subscriptionId "<sub-id>" -appId "<app-id>" -secret "<app-secret>" -tenantId "<tenant-id>" -alertRuleType "alertRules"`
 - Mapping templates related to zscaler: `.\map-analytics.ps1 -resourceGroupName "<resource-group-name>" -workspaceName "<workspace-name>" -noninteractive -subscriptionId "<sub-id>" -appId "<app-id>" -secret "<app-secret>" -tenantId "<tenant-id>" -alertRuleType "alertRuleTemplates" -dataConnectorFilter "Zscaler"`
-- Mapping active analytics related to zscaler: `.\map-analytics.ps1 -resourceGroupName "<resource-group-name>" -workspaceName "<workspace-name>" -noninteractive -subscriptionId "<sub-id>" -appId "<app-id>" -secret "<app-secret>" -tenantId "<tenant-id>" -alertRuleType "alertRules" -dataConnectorFilter "Zscaler"`
+- Mapping active analytics related to zscaler for version 13: `.\map-analytics.ps1 -resourceGroupName "<resource-group-name>" -workspaceName "<workspace-name>" -attackVersion "13" -noninteractive -subscriptionId "<sub-id>" -appId "<app-id>" -secret "<app-secret>" -tenantId "<tenant-id>" -alertRuleType "alertRules" -dataConnectorFilter "Zscaler"`
 
 ### Outputs
 The script will show a couple of statistics when all inputs are provided. These are how many analytic rules were retrieved, how many there are after filtering, and how many related techniques there are:
@@ -95,6 +96,7 @@ Regardless of which mode you use, there are always two parameters and one flag t
 | --- | --- | --- |
 | `resourceGroupName` | true | The name of the resource group where the Sentinel workspace resides. |
 | `workspaceName` | true | The name of the Sentinel Log Analytics workspace. |
+| `attackVersion` | false | The version of the ATT&CK franework you want to use. |
 
 | Flag | isRequired? | Description |
 | --- | --- | --- |
@@ -140,7 +142,7 @@ When running in non-interactive mode, there are a couple of extra parameters tha
 
 - Mapping all incidents of the past 30 days: `.\map-incidents.ps1 -resourceGroupName "<resource-group-name>" -workspaceName "<workspace-name>" -noninteractive -subscriptionId "<sub-id>" -appId "<app-id>" -secret "<app-secret>" -tenantId "<tenant-id>"`
 - Mapping new and active incidents of the past 90 days: `.\map-incidents.ps1 -resourceGroupName "<resource-group-name>" -workspaceName "<workspace-name>" -noninteractive -subscriptionId "<sub-id>" -appId "<app-id>" -secret "<app-secret>" -tenantId "<tenant-id>" -statusFilter @("New","Active") -lookback "90"`
-- Mapping closed incidents of Defender for Identity the past 60 days: `.\map-incidents.ps1 -resourceGroupName "<resource-group-name>" -workspaceName "<workspace-name>" -noninteractive -subscriptionId "<sub-id>" -appId "<app-id>" -secret "<app-secret>" -tenantId "<tenant-id>" -statusFilter @("Closed") -providerFilter @("Azure Advanced Threat Protection") -lookback "60"`
+- Mapping closed incidents of Defender for Identity the past 60 days in version 13: `.\map-incidents.ps1 -resourceGroupName "<resource-group-name>" -workspaceName "<workspace-name>" -attackVersion "13" -noninteractive -subscriptionId "<sub-id>" -appId "<app-id>" -secret "<app-secret>" -tenantId "<tenant-id>" -statusFilter @("Closed") -providerFilter @("Azure Advanced Threat Protection") -lookback "60"`
 
 ### Outputs
 The script will show a couple of statistics when all inputs are provided. These are how many incidents were retrieved, how many there are after filtering, and how many related techniques there are:
@@ -165,7 +167,7 @@ A couple of months after I started creating these scripts, I stumbled across the
 # Future improvements
 The two scripts still need some improvements in the future to make them even more powerfull:
 - More error-handling in both the interactive and non-interactive modes
-- Support for more MITRE Layer versions
+- ~~Support for more MITRE Layer versions~~
 - Merger of these features with the Dettectinator project (https://github.com/siriussecurity/dettectinator) 
 - Support for custom colors
 - Support for filtering on custom created analytic rules
